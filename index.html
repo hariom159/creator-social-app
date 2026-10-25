@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CreatorBook | Home</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --blue: #1877f2;
+  --bg: #f0f2f5;
+  --white: #fff;
+  --text: #1c1e21;
+  --muted: #65676b;
+  --border: #dddfe2;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button, input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+}
+
+.topbar {
+  height: 60px;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  box-shadow: 0 1px 4px #0002;
+  gap: 12px;
+}
+
+.brand {
+  color: var(--blue);
+  font-size: 27px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.search {
+  border-radius: 24px;
+  background: var(--bg);
+  padding: 11px 15px;
+  width: 230px;
+  border: 0;
+  outline: none;
+}
+
+.top-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--bg);
+  font-size: 20px;
+}
+
+.icon-btn:hover,
+.nav-btn:hover,
+.action-btn:hover {
+  background: #e4e6eb;
+}
+
+.layout {
+  max-width: 1400px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 250px minmax(0, 680px) 250px;
+  gap: 22px;
+  justify-content: center;
+  padding: 20px 12px;
+}
+
+.sidebar, .rightbar {
+  position: sticky;
+  top: 78px;
+  align-self: start;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  padding: 12px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: left;
+  color: var(--text);
+}
+
+.nav-btn .emoji {
+  font-size: 23px;
+  width: 30px;
+  text-align: center;
+}
+
+.demo-note {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 16px 8px;
+  line-height: 1.5;
+}
+
+.section-title {
+  font-size: 18px;
+  margin: 8px 0 12px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px #0001;
+}
+
+.stories {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.story {
+  min-width: 105px;
+  height: 165px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #74b9ff, #6c5ce7);
+  color: white;
+  display: flex;
+  align-items: end;
+  padding: 10px;
+  font-weight: 700;
+  text-shadow: 0 1px 3px #0008;
+}
+
+.story:nth-child(2) {
+  background: linear-gradient(160deg, #fd79a8, #e17055);
+}
+
+.story:nth-child(3) {
+  background: linear-gradient(160deg, #00b894, #0984e3);
+}
+
+.story:nth-child(4) {
+  background: linear-gradient(160deg, #fdcb6e, #e84393);
+}
+
+.story-add {
+  background: white;
+  color: var(--text);
+  text-shadow: none;
+  border: 1px solid var(--border);
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.plus {
+  background: var(--blue);
+  color: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 25px;
+}
+
+.composer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #d8e7ff;
+  flex-shrink: 0;
+}
+
+.fake-input {
+  flex: 1;
+  background: var(--bg);
+  border-radius: 24px;
+  padding: 13px 16px;
+  color: var(--muted);
+  text-align: left;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 14px 0;
+}
+
+.composer-actions {
+  display: flex;
+  justify-content: space-around;
+  gap: 5px;
+}
+
+.action-btn {
+  padding: 10px 5px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: var(--muted);
+  flex: 1;
+  white-space: nowrap;
+}
+
+.action-btn span {
+  margin-right: 5px;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.post-name {
+  font-weight: 700;
+}
+
+.post-time {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.more {
+  margin-left: auto;
+  font-size: 24px;
+  color: var(--muted);
+}
+
+.post-text {
+  margin: 14px 0;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.post-image {
+  width: calc(100% + 28px);
+  margin-left: -14px;
+  display: block;
+  max-height: 480px;
+  object-fit: cover;
+  background: #e4e6eb;
+}
+
+.post-stats {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 14px;
+  padding: 12px 0;
+}
+
+.post-actions {
+  display: flex;
+  border-top: 1px solid var(--border);
+  padding-top: 5px;
+}
+
+.post-actions .action-btn {
+  text-align: center;
+}
+
+.liked {
+  color: var(--blue) !important;
+}
+
+.comment-box {
+  display: none;
+  margin-top: 12px;
+}
+
+.comment-box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  outline: none;
+}
+
+.comment-list {
+  font-size: 14px;
+  margin-top: 8px;
+  line-height: 1.8;
+}
+
+.quick-link {
+  background: white;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.quick-link p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 7px;
+}
+
+.quick-link button {
+  background: var(--blue);
+  color: white;
+  border-radius: 7px;
+  padding: 9px 12px;
+  margin-top: 12px;
+  width: 100%;
+  font-weight: 700;
+}
+
+.notice {
+  background: #e7f3ff;
+  color: #174a8b;
+  padding: 12px;
+  font-size: 13px;
+  border-radius: 8px;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+.toast {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1c1e21;
+  color: white;
+  border-radius: 10px;
+  padding: 12px 18px;
+  z-index: 50;
+  display: none;
+  max-width: 90%;
+  text-align: center;
+}
+
+@media (max-width: 1050px) {
+  .layout {
+    grid-template-columns: 210px minmax(0, 680px);
+  }
+  .rightbar {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .topbar {
+    height: 56px;
+    padding: 0 10px;
+  }
+
+  .brand {
+    font-size: 24px;
+  }
+
+  .search {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    text-align: center;
+    font-size: 0;
+    background: var(--bg);
+  }
+
+  .search::placeholder {
+    font-size: 0;
+  }
+
+  .top-actions {
+    gap: 5px;
+  }
+
+  .icon-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+
+  .layout {
+    display: block;
+    padding: 12px 0 80px;
+  }
+
+  .sidebar, .rightbar {
+    display: none;
+  }
+
+  .card {
+    border-radius: 0;
+    margin-bottom: 10px;
+    padding: 12px;
+  }
+
+  .story {
+    min-width: 95px;
+    height: 145px;
+  }
+
+  .post-image {
+    width: calc(100% + 24px);
+    margin-left: -12px;
+  }
+
+  .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -1px 5px #0002;
+    z-index: 20;
+  }
+
+  .mobile-nav button {
+    font-size: 22px;
+    color: var(--muted);
+    padding: 8px;
+  }
+
+  .mobile-nav button.active {
+    color: var(--blue);
+    border-top: 3px solid var(--blue);
+  }
+
+  .composer-actions .action-btn {
+    font-size: 12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">CreatorBook</div>
+
+  <input
+    class="search"
+    id="searchInput"
+    type="search"
+    placeholder="🔍 Search"
+    aria-label="Search posts"
+  >
+
+  <div class="top-actions">
+    <button class="icon-btn" onclick="showMessage('Messenger demo')" aria-label="Messages">💬</button>
+    <button class="icon-btn" onclick="showMessage('Notifications demo')" aria-label="Notifications">🔔</button>
+    <button class="icon-btn" onclick="showMessage('Profile menu demo')" aria-label="Profile menu">👤</button>
+  </div>
+</header>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <button class="nav-btn" onclick="showMessage('Home')"><span class="emoji">🏠</span> Home</button>
+    <button class="nav-btn" onclick="showMessage('Friends page demo')"><span class="emoji">👥</span> Friends</button>
+    <button class="nav-btn" onclick="showMessage('Reels page demo')"><span class="emoji">🎬</span> Reels</button>
+    <button class="nav-btn" onclick="showMessage('Memories page demo')"><span class="emoji">🕰️</span> Memories</button>
+    <button class="nav-btn" onclick="showMessage('Saved items demo')"><span class="emoji">🔖</span> Saved</button>
+    <button class="nav-btn" onclick="showMessage('Groups page demo')"><span class="emoji">🧑‍🤝‍🧑</span> Groups</button>
+    <button class="nav-btn" onclick="showMessage('Video page demo')"><span class="emoji">📺</span> Videos</button>
+    <button class="nav-btn" onclick="showMessage('Marketplace demo')"><span class="emoji">🛍️</span> Marketplace</button>
+    <button class="nav-btn" onclick="showMessage('Events page demo')"><span class="emoji">📅</span> Events</button>
+    <button class="nav-btn" onclick="showMessage('Profile page demo')"><span class="emoji">👤</span> My Profile</button>
+    <button class="nav-btn" onclick="showMessage('Settings demo')"><span class="emoji">⚙️</span> Settings</button>
+    <button class="nav-btn" onclick="showMessage('Help center demo')"><span class="emoji">❓</span> Help & Support</button>
+
+    <div class="divider"></div>
+
+    <p class="demo-note">
+      CreatorBook Demo<br>
+      यह एक स्वतंत्र डेमो प्रोजेक्ट है। यह Facebook या Meta की आधिकारिक सेवा नहीं है।
+    </p>
+  </aside>
+
+  <main>
+
+    <div class="notice">
+      <strong>Demo App</strong><br>
+      यह CreatorBook का शुरुआती होम पेज है। अभी इसमें वास्तविक अकाउंट, सर्वर या Facebook कनेक्शन नहीं है।
+    </div>
+
+    <section class="card">
+      <h2 class="section-title">Stories</h2>
+
+      <div class="stories">
+        <button class="story story-add" onclick="showMessage('Story upload demo')">
+          <span class="plus">+</span>
+          Create Story
+        </button>
+
+        <button class="story" onclick="showMessage('Story 1 demo')">Your Friends</button>
+        <button class="story" onclick="showMessage('Story 2 demo')">Creator Life</button>
+        <button class="story" onclick="showMessage('Story 3 demo')">Daily Moments</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="composer">
+        <img class="avatar" src="https://placehold.co/100x100/e7f3ff/1877f2?text=CB" alt="Demo profile">
+        <button class="fake-input" onclick="document.getElementById('postText').focus()">
+          What's on your mind?
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <form id="postForm">
+        <textarea
+          id="postText"
+          placeholder="Write a post..."
+          maxlength="2000"
+          style="width:100%;min-height:65px;padding:10px;border:1px solid #ddd;border-radius:8px;resize:vertical;"
+        ></textarea>
+
+        <div style="margin:10px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <label style="font-size:14px;color:#65676b;font-weight:600;">
+            🖼️ Add photo
+            <input id="postPhoto" type="file" accept="image/*" style="display:block;margin-top:5px;max-width:100%;">
+          </label>
+          <button type="submit" style="background:#1877f2;color:white;padding:10px 24px;border-radius:7px;font-weight:bold;margin-left:auto;">
+            Publish
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <div id="feed">
+
+      <article class="card post">
+        <div class="post-header">
+          <img class="avatar" src="https://placehold.co/100x100/e7f3ff/1877f2?text=CB" alt="CreatorBook demo avatar">
+          <div>
+            <div class="post-name">CreatorBook Creator</div>
+            <div class="post-time">Demo post · Public 🌐</div>
+          </div>
+          <button class="more" onclick="showMessage('More post options demo')" aria-label="More options">•••</button>
+        </div>
+
+        <p class="post-text">Welcome to CreatorBook! 🎉 यह हमारा पहला डेमो पोस्ट है। अपनी पोस्ट बनाओ और Like, Comment और Share बटन आज़माओ।</p>
+
+        <div class="post-stats">
+          <span class="like-count">👍 12</span>
+          <span><span class="comment-count">3</span> comments · <span class="share-count">1</span> share</span>
+        </div>
+
+        <div class="post-actions">
+          <button class="action-btn like-btn" onclick="toggleLike(this)">👍 Like</button>
+          <button class="action-btn" onclick="toggleComments(this)">💬 Comment</button>
+          <button class="action-btn" onclick="sharePost(this)">↗️ Share</button>
+        </div>
+
+        <div class="comment-box">
+          <form class="comment-form">
+            <input type="text" maxlength="300" placeholder="Write a comment..." required>
+            <button type="submit" style="color:#1877f2;font-weight:bold;padding:8px;">Send</button>
+          </form>
+          <div class="comment-list"></div>
+        </div>
+      </article>
+
+    </div>
+
+  </main>
+
+  <aside class="rightbar">
+    <h3 class="section-title">Your shortcuts</h3>
+
+    <div class="quick-link">
+      <strong>💰 Monetization</strong>
+      <p>डेमो में अपनी creator features की जानकारी देखें।</p>
+      <button onclick="showMessage('Monetization dashboard demo')">Open Dashboard</button>
+    </div>
+
+    <div class="quick-link">
+      <strong>📊 Creator Analytics</strong>
+      <p>Views, engagement और watch time के डेमो सेक्शन।</p>
+      <button onclick="showMessage('Analytics demo')">View Analytics</button>
+    </div>
+
+    <div class="quick-link">
+      <strong>👥 Followers</strong>
+      <p>यहाँ आगे चलकर followers की जानकारी जोड़ी जा सकती है।</p>
+      <button onclick="showMessage('Followers demo')">View Followers</button>
+    </div>
+
+    <div class="quick-link">
+      <strong>⚙️ Settings</strong>
+      <p>अपनी ऐप की सेटिंग्स का डेमो।</p>
+      <button onclick="showMessage('Settings demo')">Open Settings</button>
+    </div>
+
+    <div class="quick-link">
+      <strong>📩 Help & Support</strong>
+      <p>ऐप के बारे में जानकारी और मदद।</p>
+      <button onclick="showMessage('Help and Support demo')">Get Help</button>
+    </div>
+  </aside>
+
+</div>
+
+<nav class="mobile-nav" aria-label="Mobile navigation">
+  <button class="active" onclick="showMessage('Home')" aria-label="Home">🏠</button>
+  <button onclick="showMessage('Friends page demo')" aria-label="Friends">👥</button>
+  <button onclick="document.getElementById('postText').focus()" aria-label="Create post">➕</button>
+  <button onclick="showMessage('Reels page demo')" aria-label="Reels">🎬</button>
+  <button onclick="showMessage('Profile page demo')" aria-label="Profile">👤</button>
+</nav>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+function showMessage(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.style.display = 'block';
+
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => {
+    toast.style.display = 'none';
+  }, 2200);
+}
+
+function toggleLike(button) {
+  const post = button.closest('.post');
+  const count = post.querySelector('.like-count');
+  let number = Number(count.dataset.number || 12);
+
+  if (button.dataset.liked === 'true') {
+    button.dataset.liked = 'false';
+    button.classList.remove('liked');
+    button.textContent = '👍 Like';
+    number = Math.max(0, number - 1);
+  } else {
+    button.dataset.liked = 'true';
+    button.classList.add('liked');
+    button.textContent = '👍 Liked';
+    number++;
+  }
+
+  count.dataset.number = number;
+  count.textContent = '👍 ' + number;
+}
+
+function toggleComments(button) {
+  const box = button.closest('.post').querySelector('.comment-box');
+  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+
+  if (box.style.display === 'block') {
+    box.querySelector('input').focus();
+  }
+}
+
+function sharePost(button) {
+  const post = button.closest('.post');
+  const count = post.querySelector('.share-count');
+  count.textContent = Number(count.textContent) + 1;
+
+  if (navigator.share) {
+    navigator.share({
+      title: 'CreatorBook',
+      text: post.querySelector('.post-text').textContent
+    }).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(post.querySelector('.post-text').textContent)
+      .then(() => showMessage('Post text copied!'))
+      .catch(() => showMessage('Share demo'));
+  } else {
+    showMessage('Share demo');
+  }
+}
+
+document.addEventListener('submit', function(event) {
+  if (event.target.classList.contains('comment-form')) {
+    event.preventDefault();
+
+    const form = event.target;
+    const input = form.querySelector('input');
+    const post = form.closest('.post');
+    const list = post.querySelector('.comment-list');
+
+    const comment = document.createElement('div');
+    comment.textContent = '🙂 ' + input.value;
+    list.appendChild(comment);
+
+    const count = post.querySelector('.comment-count');
+    count.textContent = Number(count.textContent) + 1;
+
+    input.value = '';
+  }
+});
+
+document.getElementById('postForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const text = document.getElementById('postText').value.trim();
+  const file = document.getElementById('postPhoto').files[0];
+
+  if (!text && !file) {
+    showMessage('पहले पोस्ट में टेक्स्ट या फोटो जोड़ो।');
+    return;
+  }
+
+  const post = document.createElement('article');
+  post.className = 'card post';
+
+  const header = document.createElement('div');
+  header.className = 'post-header';
+
+  const avatar = document.createElement('img');
+  avatar.className = 'avatar';
+  avatar.src = 'https://placehold.co/100x100/e7f3ff/1877f2?text=CB';
+  avatar.alt = 'Demo profile';
+
+  const info = document.createElement('div');
+  const name = document.createElement('div');
+  name.className = 'post-name';
+  name.textContent = 'You · Demo';
+  const time = document.createElement('div');
+  time.className = 'post-time';
+  time.textContent = 'Just now · Public 🌐';
+
+  info.append(name, time);
+  header.append(avatar, info);
+  post.appendChild(header);
+
+  if (text) {
+    const paragraph = document.createElement('p');
+    paragraph.className = 'post-text';
+    paragraph.textContent = text;
+    post.appendChild(paragraph);
+  }
+
+  if (file) {
+    if (!file.type.startsWith('image/')) {
+      showMessage('कृपया image file चुनें।');
+      return;
+    }
+
+    const image = document.createElement('img');
+    image.className = 'post-image';
+    image.alt = 'Uploaded post image';
+    image.src = URL.createObjectURL(file);
+    post.appendChild(image);
+  }
+
+  const stats = document.createElement('div');
+  stats.className = 'post-stats';
+  stats.innerHTML = '<span class="like-count" data-number="0">👍 0</span><span><span class="comment-count">0</span> comments · <span class="share-count">0</span> shares</span>';
+  post.appendChild(stats);
+
+  const actions = document.createElement('div');
+  actions.className = 'post-actions';
+  actions.innerHTML = `
+    <button class="action-btn like-btn" type="button" onclick="toggleLike(this)">👍 Like</button>
+    <button class="action-btn" type="button" onclick="toggleComments(this)">💬 Comment</button>
+    <button class="action-btn" type="button" onclick="sharePost(this)">↗️ Share</button>
+  `;
+  post.appendChild(actions);
+
+  const commentBox = document.createElement('div');
+  commentBox.className = 'comment-box';
+
+  const commentForm = document.createElement('form');
+  commentForm.className = 'comment-form';
+
+  const commentInput = document.createElement('input');
+  commentInput.type = 'text';
+  commentInput.maxLength = 300;
+  commentInput.placeholder = 'Write a comment...';
+  commentInput.required = true;
+
+  const send = document.createElement('button');
+  send.type = 'submit';
+  send.textContent = 'Send';
+  send.style.cssText = 'color:#1877f2;font-weight:bold;padding:8px;';
+
+  commentForm.append(commentInput, send);
+
+  const commentList = document.createElement('div');
+  commentList.className = 'comment-list';
+
+  commentBox.append(commentForm, commentList);
+  post.appendChild(commentBox);
+
+  document.getElementById('feed').prepend(post);
+
+  this.reset();
+  showMessage('पोस्ट इस डेमो पेज पर जोड़ दी गई!');
+});
+
+document.getElementById('searchInput').addEventListener('input', function() {
+  const query = thi
